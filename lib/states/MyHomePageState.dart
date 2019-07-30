@@ -1,20 +1,11 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import './MyHomePage.dart';
+import '../MyHomePage.dart';
 
 class MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void _goToAddBoxScreen() {
+    Navigator.pushNamed(context, '/addNewBox');
   }
 
   void _decrementCounter() {
@@ -88,18 +79,21 @@ class MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   FloatingActionButton(
                     onPressed: _decrementCounter,
-                    tooltip: 'Increment',
+                    tooltip: 'Decrement',
                     child: Icon(Icons.remove),
+                    heroTag: 'btn1',
                   ),
                   FloatingActionButton(
                     tooltip: 'Reset',
                     child: Icon(Icons.restore),
                     onPressed: _resetCounter,
+                    heroTag: 'btn2',
                   ),
                   FloatingActionButton(
-                    onPressed: _incrementCounter,
-                    tooltip: 'Decrement',
+                    onPressed: _goToAddBoxScreen,
+                    tooltip: 'Increment',
                     child: Icon(Icons.add),
+                    heroTag: 'btn3',
                   ),
                 ]
               )
