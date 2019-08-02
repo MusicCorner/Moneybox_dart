@@ -1,5 +1,6 @@
-import 'package:clicker/AddNewBoxPage.dart';
+// import 'package:clicker/AddNewBoxPage.dart';
 import 'package:clicker/myTheme.dart';
+import 'package:clicker/states/AddNewBoxState.dart';
 import 'package:clicker/view/HomePage/HomePage.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(title: 'Home'),
-        '/addNewBox': (context) => AddNewBoxPage(),
+        '/addNewBox': (context) => AddNewBoxState(),
       },
     );
   }

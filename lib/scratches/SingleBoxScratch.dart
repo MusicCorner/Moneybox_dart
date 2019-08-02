@@ -1,19 +1,24 @@
+import 'package:flutter/foundation.dart';
+
 class SingleBoxScratch {
   String name;
   int id;
+  bool isSelected;
   int sumToCache;
   int cachedAlready;
-  DateTime startDate;
-  DateTime endDate;
+  final DateTime startDate;
+  final DateTime endDate;
 
-  final DateTime currentDate = DateTime.now();
+  static DateTime currentDate = DateTime.now();
 
-  SingleBoxScratch() {
-    name = 'Other';
-    id = 0;
-    sumToCache = 0;
-    cachedAlready = 0;
-    startDate = currentDate;
-    endDate = currentDate;
-  }
+  SingleBoxScratch({
+    Key key,
+    this.name = 'Other',
+    this.id = 0,
+    this.isSelected = false,
+    this.sumToCache = 0,
+    this.cachedAlready = 0,
+    DateTime startDate,
+    DateTime endDate
+  }) : startDate = currentDate, endDate = currentDate;
 }
