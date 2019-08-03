@@ -18,8 +18,11 @@ class HomePage extends StatelessWidget {
       SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed,)
     )).toList();
 
-    return Column(
-      children: boxesWidgets
+    return Container(
+      decoration: BoxDecoration(color: Colors.black),
+      child: Column(
+        children: boxesWidgets
+      ),
     );
   }
 
@@ -68,7 +71,7 @@ class HomePage extends StatelessWidget {
         actions: getActionButtos(),
       ),
       body: Center(
-        child: Consumer<BoxesModel>(builder: getBoxes)
+        child: Consumer<BoxesModel>(builder: getBoxes),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToAddBoxScreen(context),
