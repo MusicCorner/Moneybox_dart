@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: myTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(title: 'Home'),
+        '/': (context) => HomePage(title: 'Moneyboxes'),
         '/addNewBox': (context) => AddNewBoxState(),
       },
     );

@@ -1,4 +1,5 @@
 import 'package:clicker/models/BoxesModel.dart';
+import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
 // import 'package:clicker/states/SingleBoxState.dart';
 import 'package:clicker/view/HomePage/SingleBox.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,12 @@ class HomePage extends StatelessWidget {
       SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed,)
     )).toList();
 
-    return Container(
-      decoration: BoxDecoration(color: Colors.black),
-      child: Column(
-        children: boxesWidgets
-      ),
+    return MyDecorationWrapper(
+      child: Container(
+        child: Column(
+          children: boxesWidgets
+        ),
+      )
     );
   }
 
