@@ -1,12 +1,13 @@
 import 'dart:ui';
+// import 'package:clicker/states/SingleBoxState.dart';
 import 'package:flutter/material.dart';
 
-class SingleBox extends StatelessWidget {
-  SingleBox({ this.box, this.toggleBoxSelection, this.checkBoxIsShowed });
-  
+class SingleBox extends StatelessWidget{
   final box;
-  Function toggleBoxSelection;
-  bool checkBoxIsShowed;
+  final Function toggleBoxSelection;
+  final bool checkBoxIsShowed;
+
+  SingleBox({ this.box, this.toggleBoxSelection, this.checkBoxIsShowed, });
 
   void _selectBox() {
     if (box.id != 0) {
@@ -24,9 +25,15 @@ class SingleBox extends StatelessWidget {
     }
   }
 
-  void _onTap() {
+  void _toggleBox(context) {
+    Navigator.pushNamed(context, '/addNewBox');
+  }
+
+  void _onTap(context) {
     if (checkBoxIsShowed && box.id != 0) {
       _toggleCheckBox(!box.isSelected);
+    } else {
+      _toggleBox(context);
     }
   }
 
@@ -50,30 +57,36 @@ class SingleBox extends StatelessWidget {
   Widget build(BuildContext context) {
     String cachedAlready = box.cachedAlready.toString();
     String sumToCache = box.sumToCache.toString();
-    double textBoxWidth = checkBoxIsShowed ? MediaQuery.of(context).size.width * 0.84 : MediaQuery.of(context).size.width * 0.92;
 
     Widget rowContainer = Container(
-      padding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 15),
-      decoration: BoxDecoration(color: Color(0xFF171717), border: Border(bottom: BorderSide(color: Colors.black))),
+      padding: EdgeInsets.only(left: 10, top: 17, right: 10, bottom: 17),
       child: Row(children: <Widget>[
-        _getCheckBox(),
-        Container(
+        Expanded(
           child: Row(
             children: <Widget>[
-              Text(box.name, style: TextStyle(color: Colors.white)),
-              Text(cachedAlready, style: TextStyle(color: Colors.white)),
+              Text(box.name, style: TextStyle(color: Colors.white, fontSize: 18)),
+              checkBoxIsShowed ? _getCheckBox() : Text(cachedAlready, style: TextStyle(color: Colors.white)),
             ],
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
           ),
-          width: textBoxWidth,
         )
       ],),
     );
 
-    return GestureDetector(
-      onTap: _onTap,
-      onLongPress: _selectBox,
-      child: rowContainer
+    return Container(
+      decoration: BoxDecoration(color: Color(0xFF171717), border: Border(bottom: BorderSide(color: Colors.black))),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          focusColor: Colors.orange[300],
+          highlightColor: Colors.orange[300],
+          hoverColor: Colors.orange[300],
+          splashColor: Colors.orange[300],
+          onTap: () => _onTap(context),
+          onLongPress: _selectBox,
+          child: rowContainer
+        ),
+      )
     );
   }
 }

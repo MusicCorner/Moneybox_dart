@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToAddBoxScreen(context),
         tooltip: 'Add new box',
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white, size: 28,),
         heroTag: 'btn1',
       ),
     );
