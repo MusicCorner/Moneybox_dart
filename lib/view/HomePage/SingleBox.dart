@@ -1,8 +1,10 @@
 import 'dart:ui';
 // import 'package:clicker/states/SingleBoxState.dart';
+import 'package:clicker/constants/colors.dart';
+import 'package:clicker/view/DetailBoxScreen/DetailBoxScreen.dart';
 import 'package:flutter/material.dart';
 
-class SingleBox extends StatelessWidget{
+class SingleBox extends StatelessWidget {
   final box;
   final Function toggleBoxSelection;
   final bool checkBoxIsShowed;
@@ -26,13 +28,13 @@ class SingleBox extends StatelessWidget{
   }
 
   void _toggleBox(context) {
-    Navigator.pushNamed(context, '/addNewBox');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailBoxScreen(box: box)));
   }
 
   void _onTap(context) {
     if (checkBoxIsShowed && box.id != 0) {
       _toggleCheckBox(!box.isSelected);
-    } else {
+    } else if (!checkBoxIsShowed) {
       _toggleBox(context);
     }
   }
@@ -56,7 +58,7 @@ class SingleBox extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     String cachedAlready = box.cachedAlready.toString();
-    String sumToCache = box.sumToCache.toString();
+    // String sumToCache = box.sumToCache.toString();
 
     Widget rowContainer = Container(
       padding: EdgeInsets.only(left: 10, top: 17, right: 10, bottom: 17),
@@ -74,14 +76,15 @@ class SingleBox extends StatelessWidget{
     );
 
     return Container(
-      decoration: BoxDecoration(color: Color(0xFF171717), border: Border(bottom: BorderSide(color: Colors.black))),
+      decoration: BoxDecoration(color: MAIN_GREY_DARK_COLOR, border: Border(bottom: BorderSide(color: BLACK_COLOR))),
+      padding: EdgeInsets.only(top: 4, bottom: 4),
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          focusColor: Colors.orange[300],
-          highlightColor: Colors.orange[300],
-          hoverColor: Colors.orange[300],
-          splashColor: Colors.orange[300],
+          focusColor: ORANGE_BRIGHT_COLOR,
+          highlightColor: ORANGE_BRIGHT_COLOR,
+          hoverColor: ORANGE_BRIGHT_COLOR,
+          splashColor: ORANGE_BRIGHT_COLOR,
           onTap: () => _onTap(context),
           onLongPress: _selectBox,
           child: rowContainer

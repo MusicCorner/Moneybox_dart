@@ -1,6 +1,5 @@
 import 'package:clicker/models/BoxesModel.dart';
 import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
-// import 'package:clicker/states/SingleBoxState.dart';
 import 'package:clicker/view/HomePage/SingleBox.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +14,7 @@ class HomePage extends StatelessWidget {
 
   Widget getBoxes(context, boxesModel, child) {
     bool checkBoxIsShowed = !!boxesModel.boxes.any((item) => !!item.isSelected);
+
     List<Widget> boxesWidgets = boxesModel.boxes.map<Widget>((box) => (
       SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed,)
     )).toList();

@@ -1,6 +1,7 @@
+import 'package:clicker/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData myTheme = ThemeData(
-  primaryColor: Colors.grey[900],
-  accentColor: Colors.orange,
+  primaryColor: APP_BAR_COLOR,
+  accentColor: ORANGE_COLOR
 );
