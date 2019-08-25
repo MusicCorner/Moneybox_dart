@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget getDeleteButton(context, boxesModel, child) {
-    bool isNotMainCheckBoxSelected = boxesModel.boxes.any((item) => !!(item.isSelected && item.id != 0));
+    bool isNotMainCheckBoxSelected = this.isNotMainCheckBoxSelected(boxesModel.boxes);
     List boxesIdToDelete = boxesModel.boxes.where((box) => !!box.isSelected).map((item) => item.id).toList();
     if (isNotMainCheckBoxSelected) {
       return IconButton(
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget getCloseButton(context, boxesModel, child) {
-    bool isNotMainCheckBoxSelected = boxesModel.boxes.any((item) => !!item.isSelected);
+    bool isNotMainCheckBoxSelected = this.isNotMainCheckBoxSelected(boxesModel.boxes);
     if (isNotMainCheckBoxSelected) {
       return IconButton(
         icon: Icon(Icons.close),
@@ -57,12 +57,49 @@ class HomePage extends StatelessWidget {
     return Text('');
   }
 
+  Widget getSearchButton(context, boxesModel, child) {
+    bool isAnyBoxSelected = boxesModel.boxes.any((item) => !!item.isSelected);
+    if (isAnyBoxSelected) {
+      return Text('');
+    }
+
+    return IconButton(
+      icon: Icon(Icons.search),
+      onPressed: () => boxesModel.toggleAllBoxesSelection(false),
+    );
+  }
+
+  Widget getToggleAllCheckBoxes(context, boxesModel, child) {
+    List listOfAvailableBoxes = boxesModel.boxes.where((item) => item.id != 0).toList();
+    bool areAllCheckBoxesSelected = listOfAvailableBoxes.every((item) => !!item.isSelected);
+    bool isAnyBoxSelected = boxesModel.boxes.any((item) => !!item.isSelected);
+    bool areThereAnyBoxes = listOfAvailableBoxes.length > 0;
+
+    if (areAllCheckBoxesSelected && areThereAnyBoxes) {
+      return IconButton(
+        icon: Icon(Icons.check_box),
+        onPressed: () => boxesModel.toggleAllBoxesSelection(false),
+      );
+    }
+
+    if (isAnyBoxSelected) {
+      return IconButton(
+        icon: Icon(Icons.check_box_outline_blank),
+        onPressed: () => boxesModel.toggleAllBoxesSelection(true),
+      );
+    }
+
+    return Text('');
+  }
+
   List<Widget> getActionButtos() {
     Widget deleteButton = Consumer<BoxesModel>(builder: getDeleteButton);
-    
     Widget closeButton = Consumer<BoxesModel>(builder: getCloseButton);
-    List<Widget> widgets = [deleteButton, closeButton];
-   return widgets;
+    Widget searchButton = Consumer<BoxesModel>(builder: getSearchButton);
+    Widget toggleAllCheckBoxes = Consumer<BoxesModel>(builder: getToggleAllCheckBoxes);
+    List<Widget> widgets = [deleteButton, closeButton, toggleAllCheckBoxes, searchButton];
+
+    return widgets;
   }
 
   @override
