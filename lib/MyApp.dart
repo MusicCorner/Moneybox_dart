@@ -1,7 +1,6 @@
-// import 'package:clicker/AddNewBoxPage.dart';
 import 'package:clicker/myTheme.dart';
 import 'package:clicker/states/AddNewBoxState.dart';
-import 'package:clicker/view/HomePage/HomePage.dart';
+import 'package:clicker/states/HomePageStateful.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,7 +11,7 @@ class MyApp extends StatelessWidget {
       theme: myTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(title: 'Moneyboxes'),
+        '/': (context) => HomePageStateful(title: 'Moneyboxes'),
         '/addNewBox': (context) => AddNewBoxState(),
       },
     );

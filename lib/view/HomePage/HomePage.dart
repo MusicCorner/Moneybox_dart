@@ -1,22 +1,41 @@
+import 'package:clicker/constants/colors.dart';
 import 'package:clicker/models/BoxesModel.dart';
+import 'package:clicker/states/HomePageStateful.dart';
 import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
 import 'package:clicker/view/HomePage/SingleBox.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends State<HomePageStateful> {
   HomePage({this.title = 'Default Title'});
   final String title;
+  bool inputIsActive = false;
+  String searchQuery = '';
 
   void _goToAddBoxScreen(context) {
     Navigator.pushNamed(context, '/addNewBox');
   }
 
+  final TextEditingController  _searchController = TextEditingController();
+
+  void _toggleSearchInput() {
+    setState(() {
+      inputIsActive = !inputIsActive;
+    });
+  }
+
+  void _onChangeSearchInput(query) {
+    setState(() {
+      searchQuery = query;
+    });
+  }
+
   Widget getBoxes(context, boxesModel, child) {
     bool checkBoxIsShowed = !!boxesModel.boxes.any((item) => !!item.isSelected);
+    List filteredBoxes = this.getSearchedResults(searchQuery, boxesModel.boxes);
 
-    List<Widget> boxesWidgets = boxesModel.boxes.map<Widget>((box) => (
-      SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed,)
+    List<Widget> boxesWidgets = filteredBoxes.map<Widget>((box) => (
+      SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed)
     )).toList();
 
     return MyDecorationWrapper(
@@ -30,6 +49,14 @@ class HomePage extends StatelessWidget {
 
   bool isNotMainCheckBoxSelected(boxes) {
     return boxes.any((item) => !!(item.isSelected && item.id != 0));
+  }
+
+  List getSearchedResults(String query, boxes) {
+    if (query.isNotEmpty) {
+      return boxes.where((box) => !!box.name.contains(query)).toList();
+    }
+
+    return boxes;
   }
 
   Widget getDeleteButton(context, boxesModel, child) {
@@ -65,7 +92,7 @@ class HomePage extends StatelessWidget {
 
     return IconButton(
       icon: Icon(Icons.search),
-      onPressed: () => boxesModel.toggleAllBoxesSelection(false),
+      onPressed: () => this._toggleSearchInput(),
     );
   }
 
@@ -106,7 +133,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: inputIsActive ? TextField(
+        controller: _searchController,
+        onChanged: _onChangeSearchInput,
+        cursorColor: WHITE_COLOR,
+        style: TextStyle(color: WHITE_COLOR),
+        autofocus: true,
+        decoration: InputDecoration(
+          // prefixIcon: Icon(Icons.search),
+          hintText: 'Search...',
+          hintStyle: TextStyle(color: Colors.grey)
+          )
+        ) : Text(title),
         actions: getActionButtos(),
       ),
       body: Center(
