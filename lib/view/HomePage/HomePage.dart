@@ -174,7 +174,7 @@ class HomePage extends State<HomePageStateful> {
     return widgets;
   }
 
-  Widget getLeadingButton() {
+  Widget getLeadingButton(context) {
     if (inputIsActive) {
       return IconButton(
         icon: Icon(Icons.arrow_back),
@@ -183,7 +183,7 @@ class HomePage extends State<HomePageStateful> {
             searchQuery = '';
           });
           _searchController.text = '';
-
+          FocusScope.of(context).requestFocus(FocusNode());
           this._toggleSearchInput();
         },
       );
@@ -210,7 +210,7 @@ class HomePage extends State<HomePageStateful> {
           )
         ) : Text(title),
         actions: getActionButtos(),
-        leading: getLeadingButton(),
+        leading: getLeadingButton(context),
       ),
       body: 
       GestureDetector(
