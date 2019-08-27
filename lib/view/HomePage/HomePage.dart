@@ -12,6 +12,7 @@ class HomePage extends State<HomePageStateful> {
   bool inputIsActive = false;
   String searchQuery = '';
   final TextEditingController  _searchController = TextEditingController();
+  FocusNode _searchInputFocusNode = FocusNode();
 
   void _goToAddBoxScreen(context) {
     Navigator.pushNamed(context, '/addNewBox');
@@ -32,7 +33,6 @@ class HomePage extends State<HomePageStateful> {
   Widget getBoxes(context, boxesModel, child) {
     bool checkBoxIsShowed = !!boxesModel.boxes.any((item) => !!item.isSelected);
     List filteredBoxes = this.getSearchedResults(searchQuery, boxesModel.boxes);
-    print(_searchController.text);
     List<Widget> boxesWidgets = filteredBoxes.map<Widget>((box) => (
       SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed)
     )).toList();
@@ -58,13 +58,41 @@ class HomePage extends State<HomePageStateful> {
     return boxes;
   }
 
+  void submitDeletion(context, boxesModel, boxesIdsToDelete) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure?'),
+          content: Text("You are going to delete ${boxesIdsToDelete.length} boxes!"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                boxesModel.toggleAllBoxesSelection(false);
+              },
+            ),
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                boxesModel.deleteBoxes(boxesIdsToDelete);
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
+    );
+  }
+
   Widget getDeleteButton(context, boxesModel, child) {
     bool isNotMainCheckBoxSelected = this.isNotMainCheckBoxSelected(boxesModel.boxes);
-    List boxesIdToDelete = boxesModel.boxes.where((box) => !!box.isSelected).map((item) => item.id).toList();
+    List boxesIdsToDelete = boxesModel.boxes.where((box) => !!box.isSelected).map((item) => item.id).toList();
     if (isNotMainCheckBoxSelected) {
       return IconButton(
         icon: Icon(Icons.delete),
-        onPressed: () => boxesModel.deleteBoxes(boxesIdToDelete),
+        onPressed: () => submitDeletion(context, boxesModel, boxesIdsToDelete),
       );
     }
 
@@ -174,6 +202,7 @@ class HomePage extends State<HomePageStateful> {
           cursorColor: WHITE_COLOR,
           style: TextStyle(color: WHITE_COLOR),
           autofocus: true,
+          focusNode: _searchInputFocusNode,
           decoration: InputDecoration(
             // prefixIcon: Icon(Icons.search),
             hintText: 'Search...',
@@ -183,8 +212,14 @@ class HomePage extends State<HomePageStateful> {
         actions: getActionButtos(),
         leading: getLeadingButton(),
       ),
-      body: Center(
-        child: Consumer<BoxesModel>(builder: getBoxes),
+      body: 
+      GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Center(
+          child: Consumer<BoxesModel>(builder: getBoxes),
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToAddBoxScreen(context),
