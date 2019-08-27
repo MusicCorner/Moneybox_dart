@@ -11,12 +11,11 @@ class HomePage extends State<HomePageStateful> {
   final String title;
   bool inputIsActive = false;
   String searchQuery = '';
+  final TextEditingController  _searchController = TextEditingController();
 
   void _goToAddBoxScreen(context) {
     Navigator.pushNamed(context, '/addNewBox');
   }
-
-  final TextEditingController  _searchController = TextEditingController();
 
   void _toggleSearchInput() {
     setState(() {
@@ -33,7 +32,7 @@ class HomePage extends State<HomePageStateful> {
   Widget getBoxes(context, boxesModel, child) {
     bool checkBoxIsShowed = !!boxesModel.boxes.any((item) => !!item.isSelected);
     List filteredBoxes = this.getSearchedResults(searchQuery, boxesModel.boxes);
-
+    print(_searchController.text);
     List<Widget> boxesWidgets = filteredBoxes.map<Widget>((box) => (
       SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed)
     )).toList();
@@ -53,7 +52,7 @@ class HomePage extends State<HomePageStateful> {
 
   List getSearchedResults(String query, boxes) {
     if (query.isNotEmpty) {
-      return boxes.where((box) => !!box.name.contains(query)).toList();
+      return boxes.where((box) => !!box.name.toLowerCase().contains(query.toLowerCase())).toList();
     }
 
     return boxes;
@@ -90,10 +89,28 @@ class HomePage extends State<HomePageStateful> {
       return Text('');
     }
 
-    return IconButton(
-      icon: Icon(Icons.search),
-      onPressed: () => this._toggleSearchInput(),
-    );
+    if (inputIsActive && searchQuery.length > 0) {
+      return IconButton(
+        icon: Icon(Icons.close),
+        onPressed: () {
+          setState(() {
+            searchQuery = '';
+          });
+          _searchController.text = '';
+
+          // this._toggleSearchInput();
+        },
+      );
+    }
+
+    if (!inputIsActive) {
+      return IconButton(
+        icon: Icon(Icons.search),
+        onPressed: this._toggleSearchInput,
+      );
+    }
+
+    return Text('');
   }
 
   Widget getToggleAllCheckBoxes(context, boxesModel, child) {
@@ -129,23 +146,42 @@ class HomePage extends State<HomePageStateful> {
     return widgets;
   }
 
+  Widget getLeadingButton() {
+    if (inputIsActive) {
+      return IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          setState(() {
+            searchQuery = '';
+          });
+          _searchController.text = '';
+
+          this._toggleSearchInput();
+        },
+      );
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: inputIsActive ? TextField(
-        controller: _searchController,
-        onChanged: _onChangeSearchInput,
-        cursorColor: WHITE_COLOR,
-        style: TextStyle(color: WHITE_COLOR),
-        autofocus: true,
-        decoration: InputDecoration(
-          // prefixIcon: Icon(Icons.search),
-          hintText: 'Search...',
-          hintStyle: TextStyle(color: Colors.grey)
+          controller: _searchController,
+          onChanged: _onChangeSearchInput,
+          cursorColor: WHITE_COLOR,
+          style: TextStyle(color: WHITE_COLOR),
+          autofocus: true,
+          decoration: InputDecoration(
+            // prefixIcon: Icon(Icons.search),
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.grey)
           )
         ) : Text(title),
         actions: getActionButtos(),
+        leading: getLeadingButton(),
       ),
       body: Center(
         child: Consumer<BoxesModel>(builder: getBoxes),
