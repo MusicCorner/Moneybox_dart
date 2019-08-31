@@ -22,7 +22,13 @@ class AddNewBoxPage extends State<AddNewBoxState> {
         ),
       ),
       body: Center(
-        child: Text('Hello!')
+        child: Column(
+          children: <Widget>[
+            TextField(
+              
+            )
+          ],
+        ),
       )
     );
   }
