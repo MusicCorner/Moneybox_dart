@@ -14,6 +14,15 @@ class HomePage extends State<HomePageStateful> {
   final TextEditingController  _searchController = TextEditingController();
   FocusNode _searchInputFocusNode = FocusNode();
 
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    _searchController.dispose();
+    _searchInputFocusNode.dispose();
+    super.dispose();
+  }
+
   void _goToAddBoxScreen(context) {
     Navigator.pushNamed(context, '/addNewBox');
   }
@@ -125,8 +134,7 @@ class HomePage extends State<HomePageStateful> {
             searchQuery = '';
           });
           _searchController.text = '';
-
-          // this._toggleSearchInput();
+          FocusScope.of(context).requestFocus(_searchInputFocusNode);
         },
       );
     }
@@ -134,7 +142,10 @@ class HomePage extends State<HomePageStateful> {
     if (!inputIsActive) {
       return IconButton(
         icon: Icon(Icons.search),
-        onPressed: this._toggleSearchInput,
+        onPressed: () {
+          FocusScope.of(context).requestFocus(_searchInputFocusNode);
+          this._toggleSearchInput();
+        }
       );
     }
 
@@ -196,19 +207,27 @@ class HomePage extends State<HomePageStateful> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: inputIsActive ? TextField(
-          controller: _searchController,
-          onChanged: _onChangeSearchInput,
-          cursorColor: WHITE_COLOR,
-          style: TextStyle(color: WHITE_COLOR),
-          autofocus: true,
-          focusNode: _searchInputFocusNode,
-          decoration: InputDecoration(
-            // prefixIcon: Icon(Icons.search),
-            hintText: 'Search...',
-            hintStyle: TextStyle(color: Colors.grey)
-          )
-        ) : Text(title),
+        title: Row(
+          children: <Widget>[
+            Container(
+              child: TextField(
+                controller: _searchController,
+                onChanged: _onChangeSearchInput,
+                cursorColor: WHITE_COLOR,
+                style: TextStyle(color: WHITE_COLOR),
+                // autofocus: true,
+                focusNode: _searchInputFocusNode,
+                decoration: InputDecoration(
+                  // prefixIcon: Icon(Icons.search),
+                  hintText: 'Search...',
+                  hintStyle: TextStyle(color: Colors.grey)
+                )
+              ),
+              width: !inputIsActive ? 0 : MediaQuery.of(context).size.width - 140,
+            ),
+            Text(!inputIsActive ? title : ""),
+          ],
+        ),
         actions: getActionButtos(),
         leading: getLeadingButton(context),
       ),
