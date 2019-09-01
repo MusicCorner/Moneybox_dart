@@ -1,5 +1,7 @@
+import 'package:clicker/common/styles/MainTextStyle.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/models/BoxesModel.dart';
+import 'package:clicker/states/AddNewBoxStateful.dart';
 import 'package:clicker/states/HomePageStateful.dart';
 import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
 import 'package:clicker/view/HomePage/SingleBox.dart';
@@ -23,8 +25,8 @@ class HomePage extends State<HomePageStateful> {
     super.dispose();
   }
 
-  void _goToAddBoxScreen(context) {
-    Navigator.pushNamed(context, '/addNewBox');
+  void _goToAddBoxScreen(context, boxesModel) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewBoxStateful(boxesModel: boxesModel)));
   }
 
   void _toggleSearchInput() {
@@ -214,7 +216,7 @@ class HomePage extends State<HomePageStateful> {
                 controller: _searchController,
                 onChanged: _onChangeSearchInput,
                 cursorColor: WHITE_COLOR,
-                style: TextStyle(color: WHITE_COLOR),
+                style: MainTextStyle().define(),
                 // autofocus: true,
                 focusNode: _searchInputFocusNode,
                 decoration: InputDecoration(
@@ -240,12 +242,14 @@ class HomePage extends State<HomePageStateful> {
           child: Consumer<BoxesModel>(builder: getBoxes),
         )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _goToAddBoxScreen(context),
-        tooltip: 'Add new box',
-        child: Icon(Icons.add, color: Colors.white, size: 28,),
-        heroTag: 'btn1',
-      ),
+      floatingActionButton: Consumer<BoxesModel>(builder: (context, boxesModel, widget) {
+        return FloatingActionButton(
+          onPressed: () => _goToAddBoxScreen(context, boxesModel),
+          tooltip: 'Add new box',
+          child: Icon(Icons.add, color: Colors.white, size: 28,),
+          heroTag: 'btn1',
+        );
+      }),
     );
   }
 }

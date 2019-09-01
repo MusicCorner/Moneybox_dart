@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class MyDecorationWrapper extends StatelessWidget {
   final Widget child;
   final BoxDecoration decoration;
+  final EdgeInsets padding;
 
   static BoxDecoration defaultDecoration = BoxDecoration(color: Colors.black);
 
   MyDecorationWrapper({
     this.child,
+    this.padding,
     decoration,
   }) : decoration = defaultDecoration;
 
@@ -16,6 +18,7 @@ class MyDecorationWrapper extends StatelessWidget {
     return Container(
       decoration: decoration,
       child: child,
+      padding: padding != null ? padding : EdgeInsets.all(0),
     );
 
     // return Expanded(

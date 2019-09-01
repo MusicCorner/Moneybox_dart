@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 
 class BoxesModel extends ChangeNotifier {
   static final initialBoxItem = SingleBoxScratch();
-  static final testBox = SingleBoxScratch(name: 'Thailand', id: 1, sumToCache: 60000, cachedAlready: 22000);
-  static final testBox1 = SingleBoxScratch(name: 'Test box to delete1', id: 2);
-  static final testBox2 = SingleBoxScratch(name: 'Test box to delete2', id: 3);
+  // static final testBox = SingleBoxScratch(name: 'Thailand', id: 1, sumToCache: 60000, cachedAlready: 22000);
+  // static final testBox1 = SingleBoxScratch(name: 'Test box to delete1', id: 2);
+  // static final testBox2 = SingleBoxScratch(name: 'Test box to delete2', id: 3);
 
-  List _boxes = [initialBoxItem, testBox, testBox1, testBox2];
+  List _boxes = [initialBoxItem];
 
   UnmodifiableListView get boxes => UnmodifiableListView(_boxes);
 

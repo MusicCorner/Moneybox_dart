@@ -1,5 +1,6 @@
 import 'dart:ui';
 // import 'package:clicker/states/SingleBoxState.dart';
+import 'package:clicker/common/styles/MainTextStyle.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/view/DetailBoxScreen/DetailBoxScreen.dart';
 import 'package:flutter/material.dart';
@@ -66,8 +67,8 @@ class SingleBox extends StatelessWidget {
         Expanded(
           child: Row(
             children: <Widget>[
-              Text(box.name, style: TextStyle(color: Colors.white, fontSize: 18)),
-              checkBoxIsShowed ? _getCheckBox() : Text(cachedAlready, style: TextStyle(color: Colors.white)),
+              Text(box.name, style: MainTextStyle().define()),
+              checkBoxIsShowed ? _getCheckBox() : Text(cachedAlready, style: MainTextStyle(fontSize: 15).define()),
             ],
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
           ),
