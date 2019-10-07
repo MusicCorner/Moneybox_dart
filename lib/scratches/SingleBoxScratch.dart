@@ -6,8 +6,8 @@ class SingleBoxScratch {
   bool isSelected;
   int sumToCache;
   int cachedAlready;
-  final DateTime startDate;
-  final DateTime endDate;
+  DateTime startDate;
+  DateTime endDate;
 
   static DateTime currentDate = DateTime.now();
 
@@ -18,7 +18,7 @@ class SingleBoxScratch {
     this.isSelected = false,
     this.sumToCache = 0,
     this.cachedAlready = 0,
-    DateTime startDate,
-    DateTime endDate
-  }) : startDate = currentDate, endDate = currentDate;
+    this.startDate,
+    this.endDate
+  });
 }

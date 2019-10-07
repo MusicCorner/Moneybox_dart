@@ -1,7 +1,7 @@
 import 'package:clicker/common/styles/MainTextStyle.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/models/BoxesModel.dart';
-import 'package:clicker/states/AddNewBoxStateful.dart';
+import 'package:clicker/states/AddNewBoxFirstPageStateful.dart';
 import 'package:clicker/states/HomePageStateful.dart';
 import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
 import 'package:clicker/view/HomePage/SingleBox.dart';
@@ -26,7 +26,7 @@ class HomePage extends State<HomePageStateful> {
   }
 
   void _goToAddBoxScreen(context, boxesModel) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewBoxStateful(boxesModel: boxesModel)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewBoxFirstPageStateful(boxesModel: boxesModel)));
   }
 
   void _toggleSearchInput() {
@@ -233,8 +233,7 @@ class HomePage extends State<HomePageStateful> {
         actions: getActionButtos(),
         leading: getLeadingButton(context),
       ),
-      body: 
-      GestureDetector(
+      body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
