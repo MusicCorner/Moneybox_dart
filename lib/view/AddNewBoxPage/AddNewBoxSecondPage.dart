@@ -63,7 +63,7 @@ class AddNewBoxSecondPage extends State<AddNewBoxSecondPageStateful> {
 
   void _submit(BuildContext context) {
     boxesModel.addNewBox(currentBox);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageStateful()));
+    Navigator.popUntil(context, (Route route) => route.isFirst);
   }
 
   Widget _getFloatingActionButton(BuildContext context) {

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends State<HomePageStateful> {
-  HomePage({this.title = 'Default Title'});
+  HomePage({this.title = 'Money Boxes'});
   final String title;
   bool inputIsActive = false;
   String searchQuery = '';
