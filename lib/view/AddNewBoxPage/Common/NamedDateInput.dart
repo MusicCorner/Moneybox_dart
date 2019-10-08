@@ -6,8 +6,10 @@ class NamedDateInput extends StatelessWidget {
   String title;
   String hintText;
   Function onTap;
+  TextEditingController controller;
+  bool enabled;
 
-  NamedDateInput({ this.title, this.hintText, this.onTap });
+  NamedDateInput({ this.title, this.hintText, this.onTap, this.controller, this.enabled = true });
 
   Widget build(BuildContext context) {
     return (
@@ -26,6 +28,9 @@ class NamedDateInput extends StatelessWidget {
                 hintStyle: TextStyle(color: Colors.grey)
               ),
               onTap: onTap,
+              enabled: enabled,
+              readOnly: true,
+              controller: controller,
               style: MainTextStyle().define(),
             )
           )

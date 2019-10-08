@@ -24,6 +24,10 @@ class BoxesModel extends ChangeNotifier {
     );
   }
 
+  void addNewBox(SingleBoxScratch boxModel) {
+    _boxes.add(boxModel);
+  }
+
   void deleteBoxes(List boxesId) {
     boxesId.forEach((boxId) => {
       _boxes.removeWhere((item) => item.id != 0 && item.id == boxId)

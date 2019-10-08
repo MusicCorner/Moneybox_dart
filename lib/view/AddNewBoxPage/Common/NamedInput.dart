@@ -5,8 +5,9 @@ class NamedInput extends StatelessWidget {
   final Function onChanged;
   final String title;
   final String hintText;
+  final TextInputType keyBoardType;
 
-  NamedInput({ this.onChanged, this.title, this.hintText });
+  NamedInput({ this.onChanged, this.title, this.hintText, this.keyBoardType = TextInputType.text });
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,8 @@ class NamedInput extends StatelessWidget {
                 hintStyle: TextStyle(color: Colors.grey)
               ),
               onChanged: onChanged,
+              
+              keyboardType: keyBoardType,
               style: MainTextStyle().define(),
             )
           )
