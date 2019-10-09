@@ -1,19 +1,19 @@
 import 'dart:collection';
-import 'package:clicker/scratches/SingleBoxScratch.dart';
+import 'package:clicker/scratches/SingleBox.dart';
 import 'package:flutter/foundation.dart';
 
 class BoxesModel extends ChangeNotifier {
-  static final initialBoxItem = SingleBoxScratch();
-  // static final testBox = SingleBoxScratch(name: 'Thailand', id: 1, sumToCache: 60000, cachedAlready: 22000);
-  // static final testBox1 = SingleBoxScratch(name: 'Test box to delete1', id: 2);
-  // static final testBox2 = SingleBoxScratch(name: 'Test box to delete2', id: 3);
+  static final initialBoxItem = SingleBox();
+  // static final testBox = SingleBox(name: 'Thailand', id: 1, sumToCache: 60000, cachedAlready: 22000);
+  // static final testBox1 = SingleBox(name: 'Test box to delete1', id: 2);
+  // static final testBox2 = SingleBox(name: 'Test box to delete2', id: 3);
 
   List _boxes = [initialBoxItem];
 
   UnmodifiableListView get boxes => UnmodifiableListView(_boxes);
 
   static getBoxViaItemWithSelect (item, isSelected) {
-    return SingleBoxScratch(
+    return SingleBox(
       name: item.name,
       id: item.id,
       isSelected: isSelected,
@@ -24,7 +24,7 @@ class BoxesModel extends ChangeNotifier {
     );
   }
 
-  void addNewBox(SingleBoxScratch boxModel) {
+  void addNewBox(SingleBox boxModel) {
     _boxes.add(boxModel);
   }
 

@@ -1,11 +1,11 @@
 import 'package:clicker/constants/colors.dart';
-import 'package:clicker/scratches/SingleBoxScratch.dart';
+import 'package:clicker/scratches/SingleBox.dart';
 import 'package:clicker/view/DetailBoxScreen/ProgressBar/ProgressBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailBoxScreen extends StatelessWidget {
-  final SingleBoxScratch box;
+  final SingleBox box;
 
   DetailBoxScreen({ Key key, @required this.box }) : super(key: key);
 

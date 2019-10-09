@@ -1,7 +1,6 @@
 import 'package:clicker/models/BoxesModel.dart';
-import 'package:clicker/scratches/SingleBoxScratch.dart';
+import 'package:clicker/scratches/SingleBox.dart';
 import 'package:clicker/states/AddNewBoxSecondPageStateful.dart';
-import 'package:clicker/states/HomePageStateful.dart';
 import 'package:clicker/view/AddNewBoxPage/AddNewBoxBodyForm.dart';
 import 'package:clicker/view/AddNewBoxPage/Common/NamedDateInput.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class AddNewBoxSecondPage extends State<AddNewBoxSecondPageStateful> {
   final BoxesModel boxesModel;
-  SingleBoxScratch currentBox;
+  SingleBox currentBox;
 
   AddNewBoxSecondPage({ Key key, this.boxesModel, this.currentBox });
 
@@ -19,7 +18,7 @@ class AddNewBoxSecondPage extends State<AddNewBoxSecondPageStateful> {
   String _getDateString(DateTime dateTime) {
     String day = dateTime.day <= 9 ? '0${dateTime.day}' : dateTime.day.toString();
 
-    return '${dateTime.year}.${dateTime.month}.${day}';
+    return '${dateTime.year}.${dateTime.month}.$day';
   }
 
   Future<Null> _changeStartDate(context) async {

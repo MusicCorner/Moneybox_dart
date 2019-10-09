@@ -1,5 +1,5 @@
 import 'package:clicker/models/BoxesModel.dart';
-import 'package:clicker/scratches/SingleBoxScratch.dart';
+import 'package:clicker/scratches/SingleBox.dart';
 import 'package:clicker/states/AddNewBoxFirstPageStateful.dart';
 import 'package:clicker/states/AddNewBoxSecondPageStateful.dart';
 import 'package:clicker/view/AddNewBoxPage/AddNewBoxBodyForm.dart';
@@ -9,32 +9,32 @@ import 'package:flutter/widgets.dart';
 
 class AddNewBoxFirstPage extends State<AddNewBoxFirstPageStateful> {
   final BoxesModel boxesModel;
-  SingleBoxScratch currentBox;
+  SingleBox currentBox;
 
   AddNewBoxFirstPage({ Key key, this.boxesModel });
 
   @override
   void initState() {
-    currentBox = SingleBoxScratch(name: '', id: boxesModel.boxes.length);
+    currentBox = SingleBox(name: '', id: boxesModel.boxes.length);
     print(currentBox);
     super.initState();
   }
 
-  void _changeNameOfABox(String name) {
+  _changeName(String name) {
     setState(() {
-      currentBox.name = name;
+      currentBox.setName(name);
     });
   }
 
   void _changeSumToCache(String sumToCache) {
     setState(() {
-      currentBox.sumToCache = sumToCache != '' ? int.parse(sumToCache) : 0;
+      currentBox.setSumToCache(int.parse(sumToCache));
     });
   }
 
   void _changeAlreadyCachedSum(String alreadyCached) {
     setState(() {
-      currentBox.cachedAlready = int.parse(alreadyCached);
+      currentBox.setAlreadyCachedSum(int.parse(alreadyCached));
     });
   }
 
@@ -58,7 +58,7 @@ class AddNewBoxFirstPage extends State<AddNewBoxFirstPageStateful> {
   @override
   Widget build(BuildContext context) {
     List<Widget> namedInputsList = [
-      NamedInput(onChanged: _changeNameOfABox, title: 'Box name', hintText: 'Car'),
+      NamedInput(onChanged: _changeName, title: 'Box name', hintText: 'Car'),
       NamedInput(onChanged: _changeSumToCache, title: 'Sum to cache', hintText: '10 000', keyBoardType: TextInputType.number),
       NamedInput(onChanged: _changeAlreadyCachedSum, title: 'Cached already', hintText: '1000', keyBoardType: TextInputType.number),
     ];
