@@ -6,15 +6,23 @@ import 'package:clicker/states/HomePageStateful.dart';
 import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
 import 'package:clicker/view/HomePage/SingleBox.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends State<HomePageStateful> {
-  HomePage({this.title = 'Money Boxes'});
-  final String title;
+  BoxesModel boxesModel;
+
+  HomePage({ this.boxesModel });
+
+  final String title = 'Money Boxes';
   bool inputIsActive = false;
   String searchQuery = '';
   final TextEditingController  _searchController = TextEditingController();
   FocusNode _searchInputFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    boxesModel.initBoxesFromStorage();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -25,7 +33,7 @@ class HomePage extends State<HomePageStateful> {
     super.dispose();
   }
 
-  void _goToAddBoxScreen(context, boxesModel) {
+  void _goToAddBoxScreen(context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewBoxFirstPageStateful(boxesModel: boxesModel)));
   }
 
@@ -41,7 +49,7 @@ class HomePage extends State<HomePageStateful> {
     });
   }
 
-  Widget getBoxes(context, boxesModel, child) {
+  Widget getBoxes(context) {
     bool checkBoxIsShowed = !!boxesModel.boxes.any((item) => !!item.isSelected);
     List filteredBoxes = this.getSearchedResults(searchQuery, boxesModel.boxes);
     List<Widget> boxesWidgets = filteredBoxes.map<Widget>((box) => (
@@ -69,7 +77,7 @@ class HomePage extends State<HomePageStateful> {
     return boxes;
   }
 
-  void submitDeletion(context, boxesModel, boxesIdsToDelete) {
+  void submitDeletion(context, boxesIdsToDelete) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -97,20 +105,20 @@ class HomePage extends State<HomePageStateful> {
     );
   }
 
-  Widget getDeleteButton(context, boxesModel, child) {
+  Widget getDeleteButton(context) {
     bool isNotMainCheckBoxSelected = this.isNotMainCheckBoxSelected(boxesModel.boxes);
     List boxesIdsToDelete = boxesModel.boxes.where((box) => !!box.isSelected).map((item) => item.id).toList();
     if (isNotMainCheckBoxSelected) {
       return IconButton(
         icon: Icon(Icons.delete),
-        onPressed: () => submitDeletion(context, boxesModel, boxesIdsToDelete),
+        onPressed: () => submitDeletion(context, boxesIdsToDelete),
       );
     }
 
     return Text('');
   }
 
-  Widget getCloseButton(context, boxesModel, child) {
+  Widget getCloseButton(context) {
     bool isNotMainCheckBoxSelected = this.isNotMainCheckBoxSelected(boxesModel.boxes);
     if (isNotMainCheckBoxSelected) {
       return IconButton(
@@ -122,7 +130,7 @@ class HomePage extends State<HomePageStateful> {
     return Text('');
   }
 
-  Widget getSearchButton(context, boxesModel, child) {
+  Widget getSearchButton(context) {
     bool isAnyBoxSelected = boxesModel.boxes.any((item) => !!item.isSelected);
     if (isAnyBoxSelected) {
       return Text('');
@@ -154,7 +162,7 @@ class HomePage extends State<HomePageStateful> {
     return Text('');
   }
 
-  Widget getToggleAllCheckBoxes(context, boxesModel, child) {
+  Widget getToggleAllCheckBoxes(context) {
     List listOfAvailableBoxes = boxesModel.boxes.where((item) => item.id != 0).toList();
     bool areAllCheckBoxesSelected = listOfAvailableBoxes.every((item) => !!item.isSelected);
     bool isAnyBoxSelected = boxesModel.boxes.any((item) => !!item.isSelected);
@@ -177,11 +185,12 @@ class HomePage extends State<HomePageStateful> {
     return Text('');
   }
 
-  List<Widget> getActionButtos() {
-    Widget deleteButton = Consumer<BoxesModel>(builder: getDeleteButton);
-    Widget closeButton = Consumer<BoxesModel>(builder: getCloseButton);
-    Widget searchButton = Consumer<BoxesModel>(builder: getSearchButton);
-    Widget toggleAllCheckBoxes = Consumer<BoxesModel>(builder: getToggleAllCheckBoxes);
+  List<Widget> getActionButtos(context) {
+    Widget deleteButton = getDeleteButton(context);
+    Widget closeButton = getCloseButton(context);
+    Widget searchButton = getSearchButton(context);
+    Widget toggleAllCheckBoxes = getToggleAllCheckBoxes(context);
+
     List<Widget> widgets = [deleteButton, closeButton, toggleAllCheckBoxes, searchButton];
 
     return widgets;
@@ -230,7 +239,7 @@ class HomePage extends State<HomePageStateful> {
             Text(!inputIsActive ? title : ""),
           ],
         ),
-        actions: getActionButtos(),
+        actions: getActionButtos(context),
         leading: getLeadingButton(context),
       ),
       body: GestureDetector(
@@ -238,17 +247,15 @@ class HomePage extends State<HomePageStateful> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: Center(
-          child: Consumer<BoxesModel>(builder: getBoxes),
+          child: getBoxes(context),
         )
       ),
-      floatingActionButton: Consumer<BoxesModel>(builder: (context, boxesModel, widget) {
-        return FloatingActionButton(
-          onPressed: () => _goToAddBoxScreen(context, boxesModel),
-          tooltip: 'Add new box',
-          child: Icon(Icons.add, color: Colors.white, size: 28,),
-          heroTag: 'btn1',
-        );
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _goToAddBoxScreen(context),
+        tooltip: 'Add new box',
+        child: Icon(Icons.add, color: Colors.white, size: 28,),
+        heroTag: 'btn1',
+      ),
     );
   }
 }

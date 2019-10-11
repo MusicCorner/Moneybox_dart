@@ -20,6 +20,28 @@ class SingleBox {
     this.endDate,
   });
 
+  factory SingleBox.fromJson(Map<String, dynamic> json) {
+    return new SingleBox(
+      name: json['name'],
+      id: json['id'],
+      isSelected: json['isSelected'],
+      sumToCache: json['sumToCache'],
+      cachedAlready: json['cachedAlready'],
+      startDate: DateTime.parse(json['startDate']),
+      endDate: DateTime.parse(json['endDate']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'id': id,
+    'isSelected': isSelected,
+    'sumToCache': sumToCache,
+    'cachedAlready': cachedAlready,
+    'startDate': startDate.toIso8601String(),
+    'endDate': endDate.toIso8601String(),
+  };
+
   void setName(String nameToSet) {
     name = nameToSet;
   }
