@@ -16,15 +16,62 @@ class DetailBoxScreen extends StatelessWidget {
     return 0;
   }
 
-  Widget _getAlertWidget(BuildContext context) {
-    return new AlertDialog(
+  Widget _getAlertWidget(BuildContext context) => (
+    new AlertDialog(
       title: Text('Add payments'),
-    );
+    )
+  );
+
+  void _addPaymentToAlreadyCached(int value) {
+    print(value);
   }
 
-  void _addPaymentToCache(context) {
-    showDialog(context: context, builder: (BuildContext context) => _getAlertWidget(context));
+  void _closeDialog(context) {
+    Navigator.of(context, rootNavigator: true).pop('dialog');
   }
+
+  void _showAddPaymentsDialog(context) {
+    showDialog(context: context, builder: (BuildContext context) => AlertDialog(
+      title: Text('Add payments'),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Cancel'),
+          onPressed: () => _closeDialog(context)
+        ),
+        FlatButton(
+          child: Text('Ok'),
+          onPressed: () {
+            _addPaymentToAlreadyCached(10);
+            _closeDialog(context);
+          },
+        )
+      ],
+    ));
+  }
+
+  List<DropdownMenuItem> _getDropDownMenuItems() {
+    return [
+      DropdownMenuItem(
+        child: Text('Add payments'),
+        value: 1,
+      ),
+      DropdownMenuItem(
+        child: Text('Subtract payments'),
+        value: 2,
+      ),
+      DropdownMenuItem(
+        child: Text('Edit box'),
+        value: 3,
+      ),
+    ];
+  }
+
+  _onChangeDropDown(context) => (value) {
+    print(value);
+    if (value == 1) {
+      _showAddPaymentsDialog(context);
+    }
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +82,17 @@ class DetailBoxScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(box.name),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add, color: WHITE_COLOR),
-            color: WHITE_COLOR,
-            onPressed: () => _addPaymentToCache(context),
+          Container(
+            child: DropdownButton(
+              items: _getDropDownMenuItems(),
+              onChanged: _onChangeDropDown(context),
+              icon: Icon(Icons.more_vert, color: WHITE_COLOR),
+              iconSize: 24,
+              underline: Container(
+                height: 0,
+              ),
+            ),
+            padding: EdgeInsets.all(10)
           )
         ],
       ),

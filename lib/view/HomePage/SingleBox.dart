@@ -1,5 +1,3 @@
-import 'dart:ui';
-// import 'package:clicker/states/SingleBoxState.dart';
 import 'package:clicker/common/styles/MainTextStyle.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/view/DetailBoxScreen/DetailBoxScreen.dart';
@@ -18,17 +16,13 @@ class SingleBox extends StatelessWidget {
     }
   }
 
-  void _unselectBox() {
-    toggleBoxSelection(box.id, false);
-  }
-
   void _toggleCheckBox(isSelected) {
     if (box.id != 0) {
       toggleBoxSelection(box.id, isSelected);
     }
   }
 
-  void _toggleBox(context) {
+  void _goToBox(context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailBoxScreen(box: box)));
   }
 
@@ -36,7 +30,7 @@ class SingleBox extends StatelessWidget {
     if (checkBoxIsShowed && box.id != 0) {
       _toggleCheckBox(!box.isSelected);
     } else if (!checkBoxIsShowed) {
-      _toggleBox(context);
+      _goToBox(context);
     }
   }
 
