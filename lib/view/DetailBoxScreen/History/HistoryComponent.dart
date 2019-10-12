@@ -22,34 +22,44 @@ class HistoryComponent extends StatelessWidget {
       return Text('');
     }
 
-    return Container(
+    return Expanded(
+      child: Container(      
       // margin: EdgeInsets.only(top: 10),
-      color: MAIN_GREY_DARK_COLOR,
-      padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: Text(
-              'History:',
-              style: TextStyle(
-                color: WHITE_COLOR,
-                fontSize: 25
-              )
-            ),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: BLACK_COLOR,
+        color: MAIN_GREY_DARK_COLOR,
+        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Text(
+                'History:',
+                style: TextStyle(
+                  color: WHITE_COLOR,
+                  fontSize: 25
                 )
-              )
+              ),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: BLACK_COLOR,
+                  )
+                )
+              ),
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.only(bottom: 15),
+              padding: EdgeInsets.only(bottom: 15),
             ),
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(bottom: 15),
-            padding: EdgeInsets.only(bottom: 15),
-          ),
-          ..._getHistoryWidgetList(),
-        ],
-      ),
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  ..._getHistoryWidgetList(),
+                ],
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 }
