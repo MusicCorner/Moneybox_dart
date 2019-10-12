@@ -37,7 +37,7 @@ class BoxesModel extends ChangeNotifier {
       }).toList();
     }
 
-    // notifyListeners();
+    notifyListeners();
   }
 
   void addNewBox(SingleBox boxModel) async {

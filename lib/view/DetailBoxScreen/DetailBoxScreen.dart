@@ -1,5 +1,7 @@
+import 'package:clicker/common/sharedPreferences/updateBoxes.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/scratches/SingleBox.dart';
+import 'package:clicker/view/DetailBoxScreen/PaymentsAlertDialog/PaymentsAlertDialog.dart';
 import 'package:clicker/view/DetailBoxScreen/ProgressBar/ProgressBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,37 +18,74 @@ class DetailBoxScreen extends StatelessWidget {
     return 0;
   }
 
-  Widget _getAlertWidget(BuildContext context) => (
-    new AlertDialog(
-      title: Text('Add payments'),
-    )
-  );
-
-  void _addPaymentToAlreadyCached(int value) {
-    print(value);
-  }
-
   void _closeDialog(context) {
     Navigator.of(context, rootNavigator: true).pop('dialog');
   }
 
+  void _addPaymentsAndCloseDialog(int value, context) {
+    if (value != null) {
+      box.addPaymentsToCachedAlready(value);
+      updateSingleBox(box);
+    }
+
+    _closeDialog(context);
+  }
+
+  void _subtractPaymentsAndCloseDialog(int value, context) {
+    if (value != null) {
+      box.subtractPaymantsFromCachedAlready(value);
+      updateSingleBox(box);
+    }
+
+    _closeDialog(context);
+  }
+
   void _showAddPaymentsDialog(context) {
-    showDialog(context: context, builder: (BuildContext context) => AlertDialog(
-      title: Text('Add payments'),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Cancel'),
-          onPressed: () => _closeDialog(context)
-        ),
-        FlatButton(
-          child: Text('Ok'),
-          onPressed: () {
-            _addPaymentToAlreadyCached(10);
-            _closeDialog(context);
-          },
-        )
-      ],
-    ));
+    int paymentsToAdd;
+    void onChanged(value) {
+      paymentsToAdd = int.parse(value);
+    }
+
+    void onSubmit() {
+      _addPaymentsAndCloseDialog(paymentsToAdd, context);
+    }
+
+    void onCancel() {
+      _closeDialog(context);
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => PaymenstAlertDialog(
+        onChanged: onChanged,
+        onCancel: onCancel,
+        onSubmit: onSubmit,
+      ),
+    );
+  }
+
+  void _showSubtractPaymentsDialog(context) {
+    int paymentsToSubtract;
+    void onChanged(value) {
+      paymentsToSubtract = int.parse(value);
+    }
+
+    void onSubmit() {
+      _subtractPaymentsAndCloseDialog(paymentsToSubtract, context);
+    }
+
+    void onCancel() {
+      _closeDialog(context);
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => PaymenstAlertDialog(
+        onChanged: onChanged,
+        onCancel: onCancel,
+        onSubmit: onSubmit,
+      ),
+    );
   }
 
   List<DropdownMenuItem> _getDropDownMenuItems() {
@@ -68,8 +107,17 @@ class DetailBoxScreen extends StatelessWidget {
 
   _onChangeDropDown(context) => (value) {
     print(value);
-    if (value == 1) {
-      _showAddPaymentsDialog(context);
+    switch (value) {
+      case 1:
+        _showAddPaymentsDialog(context);
+        break;
+
+      case 2:
+        _showSubtractPaymentsDialog(context);
+        break;
+
+      default:
+        break;
     }
   };
 

@@ -1,3 +1,4 @@
+import 'package:clicker/common/sharedPreferences/updateBoxes.dart';
 import 'package:flutter/foundation.dart';
 
 class SingleBox {
@@ -64,5 +65,13 @@ class SingleBox {
 
   void setEndDate(DateTime endDateToSet) {
     endDate = endDateToSet;
+  }
+
+  void addPaymentsToCachedAlready(int valueToAdd) {
+    cachedAlready += valueToAdd;
+  }
+
+  void subtractPaymantsFromCachedAlready(int valueToSubtract) {
+    cachedAlready -= valueToSubtract;
   }
 }
