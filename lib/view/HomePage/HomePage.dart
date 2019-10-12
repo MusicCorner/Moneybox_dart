@@ -4,7 +4,7 @@ import 'package:clicker/models/BoxesModel.dart';
 import 'package:clicker/states/AddNewBoxFirstPageStateful.dart';
 import 'package:clicker/states/HomePageStateful.dart';
 import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
-import 'package:clicker/view/HomePage/SingleBox.dart';
+import 'package:clicker/view/HomePage/SingleBoxComponent.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends State<HomePageStateful> {
@@ -52,14 +52,14 @@ class HomePage extends State<HomePageStateful> {
   Widget getBoxes(context) {
     bool checkBoxIsShowed = !!boxesModel.boxes.any((item) => !!item.isSelected);
     List filteredBoxes = this.getSearchedResults(searchQuery, boxesModel.boxes);
-    List<Widget> boxesWidgets = filteredBoxes.map<Widget>((box) => (
-      SingleBox(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed)
+    List<Widget> boxesWidgetList = filteredBoxes.map<Widget>((box) => (
+      SingleBoxComponent(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed)
     )).toList();
 
     return MyDecorationWrapper(
       child: Container(
         child: Column(
-          children: boxesWidgets
+          children: boxesWidgetList
         ),
       )
     );

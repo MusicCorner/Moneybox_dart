@@ -1,15 +1,42 @@
-import 'package:clicker/common/sharedPreferences/updateBoxes.dart';
+import 'package:clicker/common/sharedPreferences/boxHistory.dart';
+import 'package:clicker/common/sharedPreferences/boxes.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/scratches/SingleBox.dart';
+import 'package:clicker/scratches/SingleHistoryItem.dart';
+import 'package:clicker/states/DetailBoxScreenStateful.dart';
+import 'package:clicker/view/DetailBoxScreen/History/HistoryComponent.dart';
 import 'package:clicker/view/DetailBoxScreen/PaymentsAlertDialog/PaymentsAlertDialog.dart';
 import 'package:clicker/view/DetailBoxScreen/ProgressBar/ProgressBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DetailBoxScreen extends StatelessWidget {
+class DetailBoxScreen extends State<DetailBoxScreenStateful> {
   final SingleBox box;
+  List<SingleHistoryItem> _history = [];
 
-  DetailBoxScreen({ Key key, @required this.box }) : super(key: key);
+  DetailBoxScreen({ @required this.box });
+
+  @override
+  initState() {
+    _updateHistory();
+    super.initState();
+  }
+
+  void _updateHistory() async {
+    _history = await getBoxHistoryById(box.id);
+    print(_history);
+  }
+
+  _addHistoryItem(String value) {
+    DateTime createdAt = DateTime.now();
+    SingleHistoryItem historyItemToAdd = SingleHistoryItem(
+      createdAt: createdAt,
+      value: value
+    );
+
+    _history.add(historyItemToAdd);
+    updateBoxHistoryViaId(_history, box.id);
+  }
 
   double _getProgressBarPercantage() {
     if (box.sumToCache > 0) {
@@ -26,6 +53,7 @@ class DetailBoxScreen extends StatelessWidget {
     if (value != null) {
       box.addPaymentsToCachedAlready(value);
       updateSingleBox(box);
+      _addHistoryItem('+ $value');
     }
 
     _closeDialog(context);
@@ -35,6 +63,7 @@ class DetailBoxScreen extends StatelessWidget {
     if (value != null) {
       box.subtractPaymantsFromCachedAlready(value);
       updateSingleBox(box);
+      _addHistoryItem('- $value');
     }
 
     _closeDialog(context);
@@ -106,7 +135,6 @@ class DetailBoxScreen extends StatelessWidget {
   }
 
   _onChangeDropDown(context) => (value) {
-    print(value);
     switch (value) {
       case 1:
         _showAddPaymentsDialog(context);
@@ -145,24 +173,31 @@ class DetailBoxScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 20, left: 10, right: 10),
-        color: MAIN_GREY_DARK_COLOR,
-        height: 140,
-        margin: EdgeInsets.only(bottom: 40),
+        padding: EdgeInsets.only(top: 20),
         child: Column(
           children: <Widget>[
-            ProgressBar(progressPercent: progressBarPercentage),
             Container(
-              margin: EdgeInsets.only(top: 20),
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Row(
+              color: MAIN_GREY_DARK_COLOR,
+              margin: EdgeInsets.only(bottom: 40),
+              padding: EdgeInsets.only(right: 10, left: 10, bottom: 15),
+              child: Column(
                 children: <Widget>[
-                  Text(box.cachedAlready.toString(), style: TextStyle(color: WHITE_COLOR)),
-                  Text(box.sumToCache.toString(), style: TextStyle(color: WHITE_COLOR),)
+                  ProgressBar(progressPercent: progressBarPercentage),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Text(box.cachedAlready.toString(), style: TextStyle(color: WHITE_COLOR)),
+                        Text(box.sumToCache.toString(), style: TextStyle(color: WHITE_COLOR),)
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                  ),
                 ],
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              ),
-            )
+              )
+            ),
+            HistoryComponent(history: _history),
           ],
         )
       ),

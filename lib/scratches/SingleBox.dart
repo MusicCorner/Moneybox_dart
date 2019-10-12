@@ -1,4 +1,3 @@
-import 'package:clicker/common/sharedPreferences/updateBoxes.dart';
 import 'package:flutter/foundation.dart';
 
 class SingleBox {

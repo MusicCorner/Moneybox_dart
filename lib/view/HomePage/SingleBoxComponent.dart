@@ -1,14 +1,14 @@
 import 'package:clicker/common/styles/MainTextStyle.dart';
 import 'package:clicker/constants/colors.dart';
-import 'package:clicker/view/DetailBoxScreen/DetailBoxScreen.dart';
+import 'package:clicker/states/DetailBoxScreenStateful.dart';
 import 'package:flutter/material.dart';
 
-class SingleBox extends StatelessWidget {
+class SingleBoxComponent extends StatelessWidget {
   final box;
   final Function toggleBoxSelection;
   final bool checkBoxIsShowed;
 
-  SingleBox({ this.box, this.toggleBoxSelection, this.checkBoxIsShowed, });
+  SingleBoxComponent({ this.box, this.toggleBoxSelection, this.checkBoxIsShowed, });
 
   void _selectBox() {
     if (box.id != 0) {
@@ -23,7 +23,7 @@ class SingleBox extends StatelessWidget {
   }
 
   void _goToBox(context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailBoxScreen(box: box)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailBoxScreenStateful(box: box)));
   }
 
   void _onTap(context) {
