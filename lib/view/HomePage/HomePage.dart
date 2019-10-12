@@ -56,17 +56,23 @@ class HomePage extends State<HomePageStateful> {
       SingleBoxComponent(box: box, toggleBoxSelection: boxesModel.toggleBoxSelection, checkBoxIsShowed: checkBoxIsShowed)
     )).toList();
 
+    Widget childToReturn = Column(
+      children: boxesWidgetList
+    );
+
+    if (boxesWidgetList.length == 0) {
+      childToReturn = Text('You have no money boxes', style: TextStyle(color: WHITE_COLOR, fontSize: 18));
+    }
+
     return MyDecorationWrapper(
       child: Container(
-        child: Column(
-          children: boxesWidgetList
-        ),
+        child: childToReturn,
       )
     );
   }
 
   bool isNotMainCheckBoxSelected(boxes) {
-    return boxes.any((item) => !!(item.isSelected && item.id != 0));
+    return boxes.any((item) => !!(item.isSelected));
   }
 
   List getSearchedResults(String query, boxes) {
@@ -250,6 +256,7 @@ class HomePage extends State<HomePageStateful> {
           child: getBoxes(context),
         )
       ),
+      backgroundColor: BLACK_COLOR,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToAddBoxScreen(context),
         tooltip: 'Add new box',

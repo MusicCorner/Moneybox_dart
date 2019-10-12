@@ -1,3 +1,4 @@
+import 'package:clicker/common/date.dart';
 import 'package:clicker/common/sharedPreferences/boxHistory.dart';
 import 'package:clicker/common/sharedPreferences/boxes.dart';
 import 'package:clicker/constants/colors.dart';
@@ -22,9 +23,16 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _history = [];
+    super.dispose();
+  }
+
   void _updateHistory() async {
     _history = await getBoxHistoryById(box.id);
-    print(_history);
+    setState(() {});
   }
 
   _addHistoryItem(String value) {
@@ -188,8 +196,20 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: Row(
                       children: <Widget>[
-                        Text(box.cachedAlready.toString(), style: TextStyle(color: WHITE_COLOR)),
-                        Text(box.sumToCache.toString(), style: TextStyle(color: WHITE_COLOR),)
+                        Column(
+                          children: <Widget>[
+                            Text(box.cachedAlready.toString(), style: TextStyle(color: WHITE_COLOR)),
+                            Text(getDefaultFormatedDateString(box.startDate), style: TextStyle(color: WHITE_COLOR)),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Text(box.sumToCache.toString(), style: TextStyle(color: WHITE_COLOR)),
+                            Text(getDefaultFormatedDateString(box.endDate), style: TextStyle(color: WHITE_COLOR)),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                        )
                       ],
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     ),

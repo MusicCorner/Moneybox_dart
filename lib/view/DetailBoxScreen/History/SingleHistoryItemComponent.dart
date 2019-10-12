@@ -1,3 +1,4 @@
+import 'package:clicker/common/date.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/scratches/SingleHistoryItem.dart';
 import 'package:flutter/widgets.dart';
@@ -7,18 +8,6 @@ class SingleHistoryItemComponent extends StatelessWidget {
 
   SingleHistoryItemComponent({ this.historyItem });
 
-  String _getParsedMonthOrDay(int toParse) {
-    return toParse > 9 ? '$toParse' : '0$toParse';
-  }
-
-  String _getCreatedAtString() {
-    DateTime createdAt = historyItem.createdAt;
-    String month = _getParsedMonthOrDay(createdAt.month);
-    String day = _getParsedMonthOrDay(createdAt.day);
-
-    return '${createdAt.year}/$month/$day';
-  }
-
   TextStyle _getMainTextStyle() => TextStyle(color: WHITE_COLOR, fontSize: 15);
 
   Widget build(BuildContext context) {
@@ -27,7 +16,7 @@ class SingleHistoryItemComponent extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Text(historyItem.value, style: _getMainTextStyle()),
-            Text(_getCreatedAtString(), style: _getMainTextStyle())
+            Text(getDefaultFormatedDateString(historyItem.createdAt), style: _getMainTextStyle())
           ],
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),

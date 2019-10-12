@@ -11,15 +11,11 @@ class SingleBoxComponent extends StatelessWidget {
   SingleBoxComponent({ this.box, this.toggleBoxSelection, this.checkBoxIsShowed, });
 
   void _selectBox() {
-    if (box.id != 0) {
-      toggleBoxSelection(box.id, true);
-    }
+    toggleBoxSelection(box.id, true);
   }
 
   void _toggleCheckBox(isSelected) {
-    if (box.id != 0) {
-      toggleBoxSelection(box.id, isSelected);
-    }
+    toggleBoxSelection(box.id, isSelected);
   }
 
   void _goToBox(context) {
@@ -27,7 +23,7 @@ class SingleBoxComponent extends StatelessWidget {
   }
 
   void _onTap(context) {
-    if (checkBoxIsShowed && box.id != 0) {
+    if (checkBoxIsShowed) {
       _toggleCheckBox(!box.isSelected);
     } else if (!checkBoxIsShowed) {
       _goToBox(context);
@@ -41,8 +37,8 @@ class SingleBoxComponent extends StatelessWidget {
         width: 29.0,
         child: Checkbox(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          onChanged: box.id != 0 ? _toggleCheckBox : (isSelected) => {},
-          value: box.id != 0 ? box.isSelected : false
+          onChanged: _toggleCheckBox,
+          value: box.isSelected
         ),
       );
     }

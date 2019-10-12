@@ -9,6 +9,7 @@ class HistoryComponent extends StatelessWidget {
   HistoryComponent({ this.history });
 
   List<Widget> _getHistoryWidgetList() {
+    history.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     List<Widget> listToReturn = history.map<Widget>((historyItem) => (
       SingleHistoryItemComponent(historyItem: historyItem)
     )).toList();

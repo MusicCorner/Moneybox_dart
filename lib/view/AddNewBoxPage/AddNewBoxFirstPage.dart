@@ -16,7 +16,6 @@ class AddNewBoxFirstPage extends State<AddNewBoxFirstPageStateful> {
   @override
   void initState() {
     currentBox = SingleBox(name: '', id: boxesModel.boxes.length);
-    print(currentBox);
     super.initState();
   }
 

@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:clicker/common/sharedPreferences/boxHistory.dart';
 import 'package:clicker/common/sharedPreferences/boxes.dart';
 import 'package:clicker/scratches/SingleBox.dart';
 import 'package:flutter/foundation.dart';
@@ -34,8 +35,9 @@ class BoxesModel extends ChangeNotifier {
   }
 
   void deleteBoxes(List boxesId) {
-    boxesId.forEach((boxId) => {
-      _boxes.removeWhere((item) => item.id != 0 && item.id == boxId)
+    boxesId.forEach((boxId) {
+      _boxes.removeWhere((item) => item.id == boxId);
+      deleteBoxHistoryById(boxId);
     });
 
     updateBoxes(_boxes);
@@ -43,7 +45,7 @@ class BoxesModel extends ChangeNotifier {
   }
 
   void toggleBoxSelection(int id, bool isSelected) {
-    _boxes = _boxes.map((item) => item.id == id ? getBoxViaItemWithSelect(item, isSelected) : item).toList();
+    _boxes = _boxes.map<SingleBox>((item) => item.id == id ? getBoxViaItemWithSelect(item, isSelected) : item).toList();
     notifyListeners();
   }
 

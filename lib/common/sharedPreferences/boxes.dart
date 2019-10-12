@@ -6,12 +6,16 @@ Future<List> getBoxesFromStorage() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   List<String> jsonedBoxesList = prefs.getStringList('boxes');
+  if (jsonedBoxesList != null) {
+    List<SingleBox> decodedList = jsonedBoxesList.map((jsonedBox) {
+      return SingleBox.fromJson(jsonDecode(jsonedBox));
+    }).toList();
 
-  List<SingleBox> decodedList = jsonedBoxesList.map((jsonedBox) {
-    return SingleBox.fromJson(jsonDecode(jsonedBox));
-  }).toList();
+    return decodedList;
+  }
 
-  return decodedList;
+  List<SingleBox> emptyListToReturn = [];
+  return emptyListToReturn;
 }
 
 void updateBoxes(List<SingleBox> boxesList) async {

@@ -8,8 +8,6 @@ void updateBoxHistoryViaId(List<SingleHistoryItem> historyArrayToSet, int boxId)
 
   List<String> historyStringList = historyArrayToSet.map((historyItem) => jsonEncode(historyItem)).toList();
   prefs.setStringList('box_${boxId}_history', historyStringList);
-
-  print(historyStringList);
 }
 
 Future<List> getBoxHistoryById(int boxId) async {
@@ -28,4 +26,9 @@ Future<List> getBoxHistoryById(int boxId) async {
   List<SingleHistoryItem> emptyListToReturn = [];
 
   return emptyListToReturn;
+}
+
+void deleteBoxHistoryById(int boxId) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('box_${boxId}_history');
 }
