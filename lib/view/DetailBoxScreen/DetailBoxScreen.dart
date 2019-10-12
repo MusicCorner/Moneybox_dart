@@ -91,6 +91,7 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
         onChanged: onChanged,
         onCancel: onCancel,
         onSubmit: onSubmit,
+        title: 'Add payments'
       ),
     );
   }
@@ -115,6 +116,7 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
         onChanged: onChanged,
         onCancel: onCancel,
         onSubmit: onSubmit,
+        title: 'Subtract payments'
       ),
     );
   }
@@ -147,11 +149,11 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
         break;
 
       case 2:
-        _showSubtractPaymentsDialog(context);
+        _showAddPaymentsDialog(context);
         break;
 
       case 3:
-        _showAddPaymentsDialog(context);
+        _showSubtractPaymentsDialog(context);
         break;
 
       default:

@@ -4,12 +4,13 @@ class PaymenstAlertDialog extends StatelessWidget {
   final Function onChanged;
   final Function onCancel;
   final Function onSubmit;
+  final String title;
 
-  PaymenstAlertDialog({ this.onChanged, this.onCancel, this.onSubmit });
+  PaymenstAlertDialog({ this.onChanged, this.onCancel, this.onSubmit, this.title });
 
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Add payments'),
+      title: Text(title),
       content: TextField(
         keyboardType: TextInputType.number,
         onChanged: onChanged,

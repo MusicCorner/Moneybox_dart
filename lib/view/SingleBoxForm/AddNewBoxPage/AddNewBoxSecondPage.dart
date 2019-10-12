@@ -82,13 +82,13 @@ class AddNewBoxSecondPage extends State<AddNewBoxSecondPageStateful> {
   Widget build(BuildContext context) {
     List<Widget> namedInputsList = [
       NamedDateInput(
-        hintText: '10.10.2019',
+        hintText: '2019.10.10',
         title: 'Start date',
         onTap: () => _changeStartDate(context),
         controller: startDateInputController
       ),
       NamedDateInput(
-        hintText: '10.10.2019',
+        hintText: '2019.10.10',
         title: 'End date',
         onTap: () => _changeEndDate(context),
         controller: endDateInputController,
