@@ -11,7 +11,7 @@ class BoxesModel extends ChangeNotifier {
 
   UnmodifiableListView get boxes => UnmodifiableListView(_boxes);
 
-  static getBoxViaItemWithSelect (item, isSelected) {
+  SingleBox getBoxViaItemWithSelect (item, isSelected) {
     return SingleBox(
       name: item.name,
       id: item.id,

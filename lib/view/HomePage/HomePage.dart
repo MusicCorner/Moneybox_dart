@@ -169,10 +169,9 @@ class HomePage extends State<HomePageStateful> {
   }
 
   Widget getToggleAllCheckBoxes(context) {
-    List listOfAvailableBoxes = boxesModel.boxes.where((item) => item.id != 0).toList();
-    bool areAllCheckBoxesSelected = listOfAvailableBoxes.every((item) => !!item.isSelected);
+    bool areAllCheckBoxesSelected = boxesModel.boxes.every((item) => !!item.isSelected);
     bool isAnyBoxSelected = boxesModel.boxes.any((item) => !!item.isSelected);
-    bool areThereAnyBoxes = listOfAvailableBoxes.length > 0;
+    bool areThereAnyBoxes = boxesModel.boxes.length > 0;
 
     if (areAllCheckBoxesSelected && areThereAnyBoxes) {
       return IconButton(
