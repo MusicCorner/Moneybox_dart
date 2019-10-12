@@ -44,6 +44,13 @@ class BoxesModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void editBox(SingleBox boxToUpdateListWith) {
+    _boxes = _boxes.map((box) => box.id == boxToUpdateListWith.id ? boxToUpdateListWith : box).toList();
+
+    updateBoxes(_boxes);
+    notifyListeners();
+  }
+
   void toggleBoxSelection(int id, bool isSelected) {
     _boxes = _boxes.map<SingleBox>((item) => item.id == id ? getBoxViaItemWithSelect(item, isSelected) : item).toList();
     notifyListeners();

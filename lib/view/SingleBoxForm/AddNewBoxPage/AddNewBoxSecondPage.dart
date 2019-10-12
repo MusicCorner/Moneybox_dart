@@ -1,8 +1,8 @@
 import 'package:clicker/models/BoxesModel.dart';
 import 'package:clicker/scratches/SingleBox.dart';
 import 'package:clicker/states/AddNewBoxSecondPageStateful.dart';
-import 'package:clicker/view/AddNewBoxPage/AddNewBoxBodyForm.dart';
-import 'package:clicker/view/AddNewBoxPage/Common/NamedDateInput.dart';
+import 'package:clicker/view/SingleBoxForm/AddNewBoxPage/BoxFormBodyComponent.dart';
+import 'package:clicker/view/SingleBoxForm/Common/NamedDateInput.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -104,7 +104,7 @@ class AddNewBoxSecondPage extends State<AddNewBoxSecondPageStateful> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: AddNewBoxBodyForm(namedInputsList: namedInputsList,),
+      body: BoxFormBodyComponent(namedInputsList: namedInputsList,),
       floatingActionButton: _getFloatingActionButton(context),
     );
   }

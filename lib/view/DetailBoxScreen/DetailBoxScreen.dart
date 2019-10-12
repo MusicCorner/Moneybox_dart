@@ -5,6 +5,7 @@ import 'package:clicker/constants/colors.dart';
 import 'package:clicker/scratches/SingleBox.dart';
 import 'package:clicker/scratches/SingleHistoryItem.dart';
 import 'package:clicker/states/DetailBoxScreenStateful.dart';
+import 'package:clicker/states/EditBoxStateful.dart';
 import 'package:clicker/view/DetailBoxScreen/History/HistoryComponent.dart';
 import 'package:clicker/view/DetailBoxScreen/PaymentsAlertDialog/PaymentsAlertDialog.dart';
 import 'package:clicker/view/DetailBoxScreen/ProgressBar/ProgressBar.dart';
@@ -21,13 +22,6 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
   initState() {
     _updateHistory();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    _history = [];
-    super.dispose();
   }
 
   void _updateHistory() async {
@@ -125,18 +119,22 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
     );
   }
 
+  _goToEditBoxScreen(context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => EditBoxStateful(box: box)));
+  }
+
   List<DropdownMenuItem> _getDropDownMenuItems() {
     return [
       DropdownMenuItem(
-        child: Text('Add payments'),
+        child: Text('Edit box'),
         value: 1,
       ),
       DropdownMenuItem(
-        child: Text('Subtract payments'),
+        child: Text('Add payments'),
         value: 2,
       ),
       DropdownMenuItem(
-        child: Text('Edit box'),
+        child: Text('Subtract payments'),
         value: 3,
       ),
     ];
@@ -145,11 +143,15 @@ class DetailBoxScreen extends State<DetailBoxScreenStateful> {
   _onChangeDropDown(context) => (value) {
     switch (value) {
       case 1:
-        _showAddPaymentsDialog(context);
+        _goToEditBoxScreen(context);
         break;
 
       case 2:
         _showSubtractPaymentsDialog(context);
+        break;
+
+      case 3:
+        _showAddPaymentsDialog(context);
         break;
 
       default:
