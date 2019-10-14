@@ -1,5 +1,5 @@
 import 'package:clicker/models/BoxesModel.dart';
-import 'package:clicker/scratches/SingleBox.dart';
+import 'package:clicker/models/SingleBox.dart';
 import 'package:clicker/view/SingleBoxForm/AddNewBoxPage/AddNewBoxSecondPage.dart';
 import 'package:flutter/material.dart';
 

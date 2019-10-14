@@ -1,7 +1,7 @@
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/models/BoxesModel.dart';
-import 'package:clicker/scratches/SingleBox.dart';
-import 'package:clicker/states/EditBoxStateful.dart';
+import 'package:clicker/models/SingleBox.dart';
+import 'package:clicker/controllers/states/EditBoxStateful.dart';
 import 'package:clicker/view/SingleBoxForm/AddNewBoxPage/BoxFormBodyComponent.dart';
 import 'package:clicker/view/SingleBoxForm/Common/NamedDateInput.dart';
 import 'package:clicker/view/SingleBoxForm/Common/NamedInput.dart';

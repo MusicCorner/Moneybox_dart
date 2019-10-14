@@ -1,6 +1,6 @@
 import 'package:clicker/common/date.dart';
 import 'package:clicker/constants/colors.dart';
-import 'package:clicker/scratches/SingleHistoryItem.dart';
+import 'package:clicker/models/SingleHistoryItem.dart';
 import 'package:flutter/widgets.dart';
 
 class SingleHistoryItemComponent extends StatelessWidget {

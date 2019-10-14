@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:clicker/scratches/SingleHistoryItem.dart';
+import 'package:clicker/models/SingleHistoryItem.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void updateBoxHistoryViaId(List<SingleHistoryItem> historyArrayToSet, int boxId) async {

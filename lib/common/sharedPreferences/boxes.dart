@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:clicker/scratches/SingleBox.dart';
+import 'package:clicker/models/SingleBox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List> getBoxesFromStorage() async {

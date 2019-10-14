@@ -1,4 +1,4 @@
-import 'package:clicker/scratches/SingleBox.dart';
+import 'package:clicker/models/SingleBox.dart';
 import 'package:clicker/view/SingleBoxForm/EditBoxPage/EditBoxPage.dart';
 import 'package:flutter/widgets.dart';
 

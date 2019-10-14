@@ -1,8 +1,8 @@
 import 'package:clicker/common/styles/MainTextStyle.dart';
 import 'package:clicker/constants/colors.dart';
 import 'package:clicker/models/BoxesModel.dart';
-import 'package:clicker/states/AddNewBoxFirstPageStateful.dart';
-import 'package:clicker/states/HomePageStateful.dart';
+import 'package:clicker/controllers/states/AddNewBoxFirstPageStateful.dart';
+import 'package:clicker/controllers/states/HomePageStateful.dart';
 import 'package:clicker/view/Common/MyDecorationWrapper/MyDecorationWrapper.dart';
 import 'package:clicker/view/HomePage/SingleBoxComponent.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
 import 'package:clicker/models/BoxesModel.dart';
-import 'package:clicker/scratches/SingleBox.dart';
-import 'package:clicker/states/AddNewBoxFirstPageStateful.dart';
-import 'package:clicker/states/AddNewBoxSecondPageStateful.dart';
+import 'package:clicker/models/SingleBox.dart';
+import 'package:clicker/controllers/states/AddNewBoxFirstPageStateful.dart';
+import 'package:clicker/controllers/states/AddNewBoxSecondPageStateful.dart';
 import 'package:clicker/view/SingleBoxForm/AddNewBoxPage/BoxFormBodyComponent.dart';
 import 'package:clicker/view/SingleBoxForm/Common/NamedInput.dart';
 import 'package:flutter/material.dart';

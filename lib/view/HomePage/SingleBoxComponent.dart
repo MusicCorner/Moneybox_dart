@@ -1,6 +1,6 @@
 import 'package:clicker/common/styles/MainTextStyle.dart';
 import 'package:clicker/constants/colors.dart';
-import 'package:clicker/states/DetailBoxScreenStateful.dart';
+import 'package:clicker/controllers/states/DetailBoxScreenStateful.dart';
 import 'package:flutter/material.dart';
 
 class SingleBoxComponent extends StatelessWidget {
